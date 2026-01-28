@@ -10,23 +10,18 @@ import pages.AdminLoginPage;
 
 import java.time.Duration;
 
-public class LoginTest {
-    private WebDriver driver;
+public class LoginTest extends BaseTest {
     private AdminLoginPage loginPage;
 
     @BeforeMethod
     public void setup() {
-    WebDriverManager.chromedriver().setup();
-    driver = new ChromeDriver();
-    driver.manage().window().maximize();
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     loginPage = new AdminLoginPage(driver);
     loginPage.navigateTo("https://automationintesting.online/admin");
     }
 
     @Test(priority = 2)
     public void validAdminLogin() {
-        AdminDashboardPage dashboard = loginPage.enterUsername("admin").enterPassword("password").clickLoginButton();
+        AdminDashboardPage dashboard = loginPage.loginAsAdmin("admin","password");
         boolean isValid = dashboard.isOnRoomsPage();
         Assert.assertTrue(isValid);
     try {
@@ -38,7 +33,7 @@ public class LoginTest {
 
     @Test
     public void invalidUsernameLogin() {
-    loginPage.enterUsername("Admin").enterPassword("password").clickLoginButton();
+        loginPage.loginAsAdmin("Admin","password");
     Assert.assertTrue(loginPage.isErrorAlertDisplayed(), "Invalid credentials");
         try {
             Thread.sleep(2000);
@@ -49,7 +44,7 @@ public class LoginTest {
 
     @Test(priority = 1)
     public void invalidPasswordLogin() {
-        loginPage.enterUsername("admin").enterPassword("password123").clickLoginButton();
+        loginPage.loginAsAdmin("admin","password123");
         Assert.assertTrue(loginPage.isErrorAlertDisplayed(), "Invalid credentials");
         try {
             Thread.sleep(2000);
@@ -58,10 +53,4 @@ public class LoginTest {
         }
     }
 
-    @AfterMethod
-    public void teardown() {
-        if(driver!=null) {
-            driver.quit();
-        }
-    }
 }

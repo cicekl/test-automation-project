@@ -14,6 +14,8 @@ public class AdminLoginPage extends BasePage {
         super(driver);
     }
 
+
+
     public AdminLoginPage enterUsername(String username) {
         WebElement field = driver.findElement(usernameField);
         wait(field);
@@ -35,6 +37,11 @@ public class AdminLoginPage extends BasePage {
         return new AdminDashboardPage(driver);
     }
 
+    public AdminDashboardPage loginAsAdmin(String username, String password) {
+        return enterUsername(username)
+                .enterPassword(password)
+                .clickLoginButton();
+    }
     public boolean isErrorAlertDisplayed() {
         try {
             wait(driver.findElement(errorAlert));
@@ -43,5 +50,7 @@ public class AdminLoginPage extends BasePage {
             return false;
         }
     }
+
+
 
 }
