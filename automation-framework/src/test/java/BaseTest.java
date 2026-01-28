@@ -3,13 +3,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.AdminLoginPage;
 
 import java.time.Duration;
 
 public class BaseTest {
 
     protected WebDriver driver;
+
+
 
     @BeforeMethod(alwaysRun = true)
     public void setupDriver() {

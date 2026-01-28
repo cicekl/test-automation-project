@@ -21,6 +21,7 @@ public class AdminDashboardPage extends BasePage {
     private final By refreshCheckbox = By.xpath("//*[@id=\"refreshCheckbox\"]");
     private final By safeCheckbox = By.xpath("//*[@id=\"safeCheckbox\"]");
     private final By viewsCheckbox = By.xpath("//*[@id=\"viewsCheckbox\"]");
+    private final By logoutButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[2]/li[2]/button");
 
     public AdminDashboardPage(WebDriver driver) {
         super(driver);
@@ -89,4 +90,21 @@ public class AdminDashboardPage extends BasePage {
 
         return !roomRows.isEmpty();
     }
+
+    public AdminDashboardPage logout() {
+        WebElement logoutBtn = driver.findElement(logoutButton);
+        wait(logoutBtn);
+        logoutBtn.click();
+        return this;
+    }
+
+    public boolean isLoggedOut() {
+        try {
+            wait(driver.findElement(logoutButton));
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
 }
